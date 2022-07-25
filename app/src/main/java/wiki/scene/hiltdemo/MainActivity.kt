@@ -1,7 +1,6 @@
 package wiki.scene.hiltdemo
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dylanc.mmkv.*
@@ -22,8 +21,6 @@ class MainActivity : AppCompatActivity() {
 
 
     private lateinit var mBinding: ActivityMainBinding
-
-    private var uid: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
