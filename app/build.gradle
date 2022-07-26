@@ -59,6 +59,11 @@ dependencies {
     implementation 'com.github.DylanCaiCoding:MMKV-KTX:1.2.13'
     implementation 'com.github.sceneren:DebouncedRuntime:1.0.2'
     implementation 'com.orhanobut:logger:2.2.0'
+
+    implementation 'com.github.DylanCaiCoding.ViewBindingKTX:viewbinding-base:2.1.0'
+    implementation 'com.github.DylanCaiCoding.LoadingStateView:loadingstateview-ktx:4.0.2'
+
+    implementation 'com.github.getActivity:TitleBar:9.5'
 }
 
 // Hilt 处理配置，能解决多 Module 项目依赖造成的编译错误
