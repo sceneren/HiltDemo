@@ -3,12 +3,31 @@ package wiki.scene.hiltdemo.base
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.annotation.StringRes
 import com.dylanc.loadingstateview.LoadingStateView
 import com.dylanc.loadingstateview.ViewType
+import com.orhanobut.logger.Logger
 import wiki.scene.hiltdemo.R
 
 class LoadingViewDelegate : LoadingStateView.ViewDelegate(ViewType.LOADING) {
+    private lateinit var tvMsg: TextView
 
-  override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup): View =
-    inflater.inflate(R.layout.layout_loading, parent, false)
+    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup): View {
+        val view = inflater.inflate(R.layout.layout_loading, parent, false)
+        tvMsg = view.findViewById(R.id.tv_msg)
+        Logger.e("onCreateView")
+        return view
+    }
+
+
+    fun updateMessage(message: String?) {
+        message?.let {
+            tvMsg.text = message
+        }
+    }
+
+    fun updateMessage(@StringRes resId: Int) {
+        tvMsg.setText(resId)
+    }
 }
