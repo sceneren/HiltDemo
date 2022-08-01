@@ -16,7 +16,6 @@ class LoadingViewDelegate : LoadingStateView.ViewDelegate(ViewType.LOADING) {
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup): View {
         val view = inflater.inflate(R.layout.layout_loading, parent, false)
         tvMsg = view.findViewById(R.id.tv_msg)
-        Logger.e("onCreateView")
         return view
     }
 

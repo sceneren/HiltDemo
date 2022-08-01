@@ -8,15 +8,13 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import wiki.scene.hiltdemo.BookInfo
 import wiki.scene.hiltdemo.R
+import wiki.scene.hiltdemo.entity.ArticleInfo
 
 class MainAdapter @AssistedInject constructor(@Assisted val type: Int) :
-    BaseQuickAdapter<BookInfo, BaseViewHolder>(R.layout.activity_main_item),LoadMoreModule {
-    init {
-        Logger.e("type:$type")
-    }
+    BaseQuickAdapter<ArticleInfo, BaseViewHolder>(R.layout.activity_main_item),LoadMoreModule {
 
-    override fun convert(holder: BaseViewHolder, item: BookInfo) {
-        holder.setText(R.id.tv_title, item.name)
+    override fun convert(holder: BaseViewHolder, item: ArticleInfo) {
+        holder.setText(R.id.tv_title, item.title)
     }
 
 }

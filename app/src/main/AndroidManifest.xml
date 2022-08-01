@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="wiki.scene.hiltdemo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -28,9 +29,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
                     android:host="aa.aa"
-                    android:path="/main" />
+                    android:path="/main"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
     </application>

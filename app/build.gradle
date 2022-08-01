@@ -70,6 +70,12 @@ dependencies {
     implementation 'com.kunminx.arch:mvi-dispatch:6.0.0-beta'
     implementation  'io.github.scwang90:refresh-layout-kernel:2.0.5'
     implementation  'io.github.scwang90:refresh-header-classics:2.0.5'
+
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
+    implementation "com.github.liujingxing.rxhttp:rxhttp:2.9.0"
+//    // ksp/kapt/annotationProcessor 选其一
+    kapt "com.github.liujingxing.rxhttp:rxhttp-compiler:2.9.0"
 }
 
 // Hilt 处理配置，能解决多 Module 项目依赖造成的编译错误

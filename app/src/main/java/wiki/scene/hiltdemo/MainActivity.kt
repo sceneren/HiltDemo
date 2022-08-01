@@ -95,16 +95,13 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>(), OnRefreshListen
                 MainEvent.EVENT_GET_DATA -> {
                     currentPage = mainEvent.result.currentPage
                     if (mainEvent.result.isFirst) {
-                        Logger.e("111")
                         adapter.setNewInstance(mainEvent.result.list)
                         mMessenger.input(PageEvent(PageEvent.EVENT_SHOW_CONTENT))
                     } else {
                         if (mainEvent.result.currentPage > 1) {
-                            Logger.e("222")
                             adapter.addData(mainEvent.result.list)
                             mMessenger.input(PageEvent(PageEvent.EVENT_FINISH_LOAD_MORE))
                         } else {
-                            Logger.e("333")
                             adapter.setNewInstance(mainEvent.result.list)
                             mMessenger.input(PageEvent(PageEvent.EVENT_FINISH_REFRESH))
                         }
@@ -119,7 +116,6 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>(), OnRefreshListen
         mMessenger.input(PageEvent(PageEvent.EVENT_SHOW_LOADING))
         mRequester.input(MainEvent(MainEvent.EVENT_GET_DATA).apply {
             param.page = 1
-            param.pageSize = 20
             param.isFirst = true
         })
     }
@@ -127,7 +123,6 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>(), OnRefreshListen
     override fun onRefresh(refreshLayout: RefreshLayout) {
         mRequester.input(MainEvent(MainEvent.EVENT_GET_DATA).apply {
             param.page = 1
-            param.pageSize = 20
             param.isFirst = false
         })
     }
@@ -135,7 +130,6 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>(), OnRefreshListen
     override fun onLoadMore() {
         mRequester.input(MainEvent(MainEvent.EVENT_GET_DATA).apply {
             param.page = currentPage + 1
-            param.pageSize = 20
             param.isFirst = false
         })
     }
