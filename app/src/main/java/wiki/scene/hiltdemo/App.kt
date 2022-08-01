@@ -29,7 +29,23 @@ class App : Application() {
         }
 
         RxHttpPlugins.init(null)      //自定义OkHttpClient对象
-            .setDebug(true)
+            .setDebug(BuildConfig.DEBUG)
+            .setOnParamAssembly {
+                //可以在此处添加全局参数和全局请求头
+                val method = it.method
+                it.addHeader("requestToken", "token")
+                if (method.isGet) {
+                    it.add("requestType", "get")
+                } else {
+                    it.addHeader("username", "sceneren")
+                    it.addHeader("password", "123456")
+                }
+                return@setOnParamAssembly it
+            }
+            .setResultDecoder {
+                Logger.e("resultDecoder:$it")
+                return@setResultDecoder it
+            }
     }
 
     private fun getOkHttpClient(): OkHttpClient {

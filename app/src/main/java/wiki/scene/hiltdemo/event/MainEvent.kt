@@ -6,6 +6,7 @@ import wiki.scene.hiltdemo.entity.ArticleInfo
 class MainEvent(eventId: Int) : Event<MainEvent.Param, MainEvent.Result>() {
     companion object {
         const val EVENT_GET_DATA = 1
+        const val EVENT_FIRST_LOAD = 2
     }
 
     init {

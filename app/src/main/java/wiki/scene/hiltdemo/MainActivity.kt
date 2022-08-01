@@ -81,7 +81,6 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>(), OnRefreshListen
                 }
 
                 PageEvent.EVENT_FINISH_REFRESH -> {
-                    Logger.e("EVENT_FINISH_REFRESH")
                     binding.refreshLayout.finishRefresh()
                 }
                 PageEvent.EVENT_FINISH_LOAD_MORE -> {
@@ -92,6 +91,9 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>(), OnRefreshListen
 
         mRequester.output(this) { mainEvent ->
             when (mainEvent.eventId) {
+                MainEvent.EVENT_FIRST_LOAD -> {
+                    mMessenger.input(PageEvent(PageEvent.EVENT_SHOW_LOADING))
+                }
                 MainEvent.EVENT_GET_DATA -> {
                     currentPage = mainEvent.result.currentPage
                     if (mainEvent.result.isFirst) {
@@ -113,7 +115,6 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>(), OnRefreshListen
 
     override fun onInput() {
         super.onInput()
-        mMessenger.input(PageEvent(PageEvent.EVENT_SHOW_LOADING))
         mRequester.input(MainEvent(MainEvent.EVENT_GET_DATA).apply {
             param.page = 1
             param.isFirst = true
