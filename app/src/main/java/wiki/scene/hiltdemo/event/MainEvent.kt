@@ -24,6 +24,7 @@ class MainEvent(eventId: Int) : Event<MainEvent.Param, MainEvent.Result>() {
     data class Result(
         var list: MutableList<ArticleInfo> = mutableListOf(),
         var currentPage: Int = 1,
+        var totalPage: Int = 0,
         var isFirst: Boolean = true,
         var isSuccess: Boolean = false,
         var errorMsg: String = ""

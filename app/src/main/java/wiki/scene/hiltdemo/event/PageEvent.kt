@@ -6,7 +6,8 @@ class PageEvent(eventId: Int) : Event<PageEvent.Param, PageEvent.Result>() {
 
     class Param
     data class Result(
-        val msg: String = ""
+        val msg: String = "",
+        var hasMore: Boolean = true
     )
 
     companion object {

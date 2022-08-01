@@ -40,6 +40,7 @@ class MainListRequester : MviDispatcher<MainEvent>() {
                             event.result.isFirst = event.param.isFirst
                             event.result.isSuccess = true
                             event.result.list = it.datas
+                            event.result.totalPage = it.pageCount
                             sendResult(event)
                         }
                 }

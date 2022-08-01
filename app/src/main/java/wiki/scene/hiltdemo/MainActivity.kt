@@ -84,7 +84,12 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>(), OnRefreshListen
                     binding.refreshLayout.finishRefresh()
                 }
                 PageEvent.EVENT_FINISH_LOAD_MORE -> {
-                    adapter.loadMoreModule.loadMoreComplete()
+                    if(pageEvent.result.hasMore){
+                        adapter.loadMoreModule.loadMoreComplete()
+                    }else{
+                        adapter.loadMoreModule.loadMoreEnd()
+                    }
+
                 }
             }
         }
@@ -102,7 +107,10 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>(), OnRefreshListen
                     } else {
                         if (mainEvent.result.currentPage > 1) {
                             adapter.addData(mainEvent.result.list)
-                            mMessenger.input(PageEvent(PageEvent.EVENT_FINISH_LOAD_MORE))
+                            mMessenger.input(PageEvent(PageEvent.EVENT_FINISH_LOAD_MORE).apply {
+                                result.hasMore =
+                                    mainEvent.result.currentPage < mainEvent.result.totalPage
+                            })
                         } else {
                             adapter.setNewInstance(mainEvent.result.list)
                             mMessenger.input(PageEvent(PageEvent.EVENT_FINISH_REFRESH))
@@ -116,7 +124,7 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>(), OnRefreshListen
     override fun onInput() {
         super.onInput()
         mRequester.input(MainEvent(MainEvent.EVENT_GET_DATA).apply {
-            param.page = 1
+            param.page = 315
             param.isFirst = true
         })
     }
