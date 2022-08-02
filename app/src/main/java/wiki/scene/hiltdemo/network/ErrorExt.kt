@@ -21,6 +21,7 @@ val Throwable.msg: String
     get() {
         //rxjava中的timeout方法超时
         //协程超时
+        this.printStackTrace()
         return when (this) {
             is UnknownHostException -> { //网络异常
                 "当前无网络，请检查你的网络设置"

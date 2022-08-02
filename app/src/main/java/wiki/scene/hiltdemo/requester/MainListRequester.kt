@@ -30,6 +30,7 @@ class MainListRequester : MviDispatcher<MainEvent>() {
                             }
                         }
                         .catch {
+                            Logger.e(it.msg)
                             if (event.result.isFirst) {
                                 sendResult(MainEvent(BaseEvent.EVENT_SHOW_ERROR_PAGE))
                             } else {

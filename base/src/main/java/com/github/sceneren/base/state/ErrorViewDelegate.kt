@@ -10,6 +10,6 @@ import com.github.sceneren.base.R
 class ErrorViewDelegate : LoadingStateView.ViewDelegate(ViewType.ERROR) {
 
     override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup): View {
-        return inflater.inflate(R.layout.layout_loading, parent, false)
+        return inflater.inflate(R.layout.layout_error, parent, false)
     }
 }
