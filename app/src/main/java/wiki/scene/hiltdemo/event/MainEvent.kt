@@ -1,16 +1,13 @@
 package wiki.scene.hiltdemo.event
 
-import com.kunminx.architecture.domain.event.Event
 import wiki.scene.hiltdemo.entity.ArticleInfo
 
-class MainEvent(eventId: Int) : Event<MainEvent.Param, MainEvent.Result>() {
+class MainEvent(eventId: Int) : BaseRecycleViewEvent<MainEvent.Param, MainEvent.Result>(eventId) {
     companion object {
         const val EVENT_GET_DATA = 1
-        const val EVENT_FIRST_LOAD = 2
     }
 
     init {
-        this.eventId = eventId
         this.param = Param()
         this.result = Result()
     }

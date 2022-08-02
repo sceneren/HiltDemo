@@ -15,10 +15,10 @@ import wiki.scene.hiltdemo.adapter.MainAdapter
 import wiki.scene.hiltdemo.base.BaseBindingActivity
 import wiki.scene.hiltdemo.base.LoadingViewDelegate
 import wiki.scene.hiltdemo.databinding.ActivityMainBinding
+import wiki.scene.hiltdemo.event.BaseEvent
+import wiki.scene.hiltdemo.event.BaseRecycleViewEvent
 import wiki.scene.hiltdemo.event.MainEvent
-import wiki.scene.hiltdemo.event.PageEvent
 import wiki.scene.hiltdemo.hilt.factory.MainAdapterFactory
-import wiki.scene.hiltdemo.message.PageMessenger
 import wiki.scene.hiltdemo.requester.MainListRequester
 import javax.inject.Inject
 import kotlin.system.exitProcess
@@ -29,7 +29,6 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>(), OnRefreshListen
     @Inject
     lateinit var mainAdapterFactory: MainAdapterFactory
 
-    private lateinit var mMessenger: PageMessenger
     private lateinit var mRequester: MainListRequester
     private lateinit var adapter: MainAdapter
 
@@ -43,7 +42,6 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>(), OnRefreshListen
     }
 
     override fun onInitViewModel() {
-        mMessenger = getActivityScopeViewModel(PageMessenger::class.java)
         mRequester = getActivityScopeViewModel(MainListRequester::class.java)
     }
 
@@ -68,54 +66,54 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>(), OnRefreshListen
 
     override fun onOutput() {
         super.onOutput()
-        mMessenger.output(this) { pageEvent ->
-            when (pageEvent.eventId) {
-                PageEvent.EVENT_SHOW_LOADING -> {
+
+        mRequester.output(this) { mainEvent ->
+            when (mainEvent.eventId) {
+                BaseEvent.EVENT_SHOW_LOADING_PAGE -> {
                     showLoadingView()
                     updateView<LoadingViewDelegate>(ViewType.LOADING) {
                         updateMessage("加载中222...")
                     }
                 }
-                PageEvent.EVENT_SHOW_CONTENT -> {
+                BaseEvent.EVENT_SHOW_CONTENT_PAGE -> {
                     showContentView()
                 }
-
-                PageEvent.EVENT_FINISH_REFRESH -> {
-                    binding.refreshLayout.finishRefresh()
+                BaseEvent.EVENT_SHOW_ERROR_PAGE -> {
+                    showErrorView()
                 }
-                PageEvent.EVENT_FINISH_LOAD_MORE -> {
-                    if(pageEvent.result.hasMore){
-                        adapter.loadMoreModule.loadMoreComplete()
-                    }else{
-                        adapter.loadMoreModule.loadMoreEnd()
-                    }
-
+                BaseEvent.EVENT_SHOW_LOADING_DIALOG -> {
+                    Logger.e("showLoadingDialog")
                 }
-            }
-        }
-
-        mRequester.output(this) { mainEvent ->
-            when (mainEvent.eventId) {
-                MainEvent.EVENT_FIRST_LOAD -> {
-                    mMessenger.input(PageEvent(PageEvent.EVENT_SHOW_LOADING))
+                BaseEvent.EVENT_HIDE_LOADING_DIALOG -> {
+                    Logger.e("hideLoadingDialog")
+                }
+                BaseEvent.EVENT_SHOW_TOAST -> {
+                    Logger.e("showToast")
+                }
+                BaseRecycleViewEvent.EVENT_FINISH_REFRESH_SUCCESS -> {
+                    binding.refreshLayout.finishRefresh(true)
+                }
+                BaseRecycleViewEvent.EVENT_FINISH_REFRESH_FAIL -> {
+                    binding.refreshLayout.finishRefresh(false)
+                }
+                BaseRecycleViewEvent.EVENT_FINISH_LOAD_MORE_COMPLETE -> {
+                    adapter.loadMoreModule.loadMoreComplete()
+                }
+                BaseRecycleViewEvent.EVENT_FINISH_LOAD_MORE_END -> {
+                    adapter.loadMoreModule.loadMoreEnd()
+                }
+                BaseRecycleViewEvent.EVENT_FINISH_LOAD_MORE_FAIL -> {
+                    adapter.loadMoreModule.loadMoreFail()
                 }
                 MainEvent.EVENT_GET_DATA -> {
                     currentPage = mainEvent.result.currentPage
-                    if (mainEvent.result.isFirst) {
-                        adapter.setNewInstance(mainEvent.result.list)
-                        mMessenger.input(PageEvent(PageEvent.EVENT_SHOW_CONTENT))
+
+                    if (mainEvent.result.currentPage > 1) {
+                        adapter.addData(mainEvent.result.list)
                     } else {
-                        if (mainEvent.result.currentPage > 1) {
-                            adapter.addData(mainEvent.result.list)
-                            mMessenger.input(PageEvent(PageEvent.EVENT_FINISH_LOAD_MORE).apply {
-                                result.hasMore =
-                                    mainEvent.result.currentPage < mainEvent.result.totalPage
-                            })
-                        } else {
-                            adapter.setNewInstance(mainEvent.result.list)
-                            mMessenger.input(PageEvent(PageEvent.EVENT_FINISH_REFRESH))
-                        }
+                        adapter.setNewInstance(mainEvent.result.list)
                     }
+
                 }
             }
         }
