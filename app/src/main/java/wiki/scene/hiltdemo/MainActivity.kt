@@ -5,6 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.dylanc.loadingstateview.ViewType
 import com.dylanc.mmkv.*
+import com.github.sceneren.base.event.BaseEvent
+import com.github.sceneren.base.event.BaseRecycleViewEvent
+import com.github.sceneren.base.state.LoadingViewDelegate
+import com.github.sceneren.base.ui.BaseBindingActivity
 import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -12,11 +16,7 @@ import com.tencent.mmkv.MMKV
 import dagger.hilt.android.AndroidEntryPoint
 import wiki.scene.hiltdemo.DataRepository.uid
 import wiki.scene.hiltdemo.adapter.MainAdapter
-import wiki.scene.hiltdemo.base.BaseBindingActivity
-import wiki.scene.hiltdemo.base.LoadingViewDelegate
 import wiki.scene.hiltdemo.databinding.ActivityMainBinding
-import wiki.scene.hiltdemo.event.BaseEvent
-import wiki.scene.hiltdemo.event.BaseRecycleViewEvent
 import wiki.scene.hiltdemo.event.MainEvent
 import wiki.scene.hiltdemo.hilt.factory.MainAdapterFactory
 import wiki.scene.hiltdemo.requester.MainListRequester

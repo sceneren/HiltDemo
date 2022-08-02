@@ -1,4 +1,4 @@
-package wiki.scene.hiltdemo.event
+package com.github.sceneren.base.event
 
 open class BaseRecycleViewEvent<P, R>(eventId: Int) : BaseEvent<P, R>(eventId) {
     companion object {

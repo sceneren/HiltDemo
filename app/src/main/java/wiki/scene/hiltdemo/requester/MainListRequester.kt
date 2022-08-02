@@ -1,6 +1,8 @@
 package wiki.scene.hiltdemo.requester
 
 import androidx.lifecycle.viewModelScope
+import com.github.sceneren.base.event.BaseEvent
+import com.github.sceneren.base.event.BaseRecycleViewEvent
 import com.kunminx.architecture.domain.dispatch.MviDispatcher
 import com.orhanobut.logger.Logger
 import kotlinx.coroutines.flow.catch
@@ -9,8 +11,6 @@ import kotlinx.coroutines.launch
 import rxhttp.wrapper.param.RxHttp
 import rxhttp.wrapper.param.toFlowResponse
 import wiki.scene.hiltdemo.entity.ArticleInfo
-import wiki.scene.hiltdemo.event.BaseEvent
-import wiki.scene.hiltdemo.event.BaseRecycleViewEvent
 import wiki.scene.hiltdemo.event.MainEvent
 import wiki.scene.hiltdemo.network.BasePageListDataResponse
 import wiki.scene.hiltdemo.network.msg

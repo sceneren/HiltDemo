@@ -1,5 +1,6 @@
 package wiki.scene.hiltdemo.event
 
+import com.github.sceneren.base.event.BaseRecycleViewEvent
 import wiki.scene.hiltdemo.entity.ArticleInfo
 
 class MainEvent(eventId: Int) : BaseRecycleViewEvent<MainEvent.Param, MainEvent.Result>(eventId) {

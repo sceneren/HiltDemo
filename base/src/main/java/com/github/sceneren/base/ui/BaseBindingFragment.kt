@@ -1,4 +1,4 @@
-package wiki.scene.hiltdemo.base
+package com.github.sceneren.base.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

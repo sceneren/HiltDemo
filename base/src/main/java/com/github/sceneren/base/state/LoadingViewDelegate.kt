@@ -1,4 +1,4 @@
-package wiki.scene.hiltdemo.base
+package com.github.sceneren.base.state
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +7,7 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import com.dylanc.loadingstateview.LoadingStateView
 import com.dylanc.loadingstateview.ViewType
-import com.orhanobut.logger.Logger
-import wiki.scene.hiltdemo.R
+import com.github.sceneren.base.R
 
 class LoadingViewDelegate : LoadingStateView.ViewDelegate(ViewType.LOADING) {
     private lateinit var tvMsg: TextView

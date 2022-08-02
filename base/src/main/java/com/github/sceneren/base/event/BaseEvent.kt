@@ -1,4 +1,4 @@
-package wiki.scene.hiltdemo.event
+package com.github.sceneren.base.event
 
 import com.kunminx.architecture.domain.event.Event
 
