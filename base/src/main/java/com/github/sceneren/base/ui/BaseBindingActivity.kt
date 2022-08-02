@@ -11,12 +11,11 @@ import com.dylanc.loadingstateview.OnReloadListener
 import com.dylanc.viewbinding.base.ActivityBinding
 import com.dylanc.viewbinding.base.ActivityBindingDelegate
 import com.hjq.bar.OnTitleBarListener
-import com.hjq.bar.TitleBar
 import com.kunminx.architecture.ui.scope.ViewModelScope
 
 abstract class BaseBindingActivity<VB : ViewBinding> : AppCompatActivity(),
     LoadingState by LoadingStateDelegate(), OnReloadListener, Decorative,
-    ActivityBinding<VB> by ActivityBindingDelegate(),OnTitleBarListener {
+    ActivityBinding<VB> by ActivityBindingDelegate(), OnTitleBarListener {
 
     private val mViewModelScope = ViewModelScope()
 
@@ -46,12 +45,12 @@ abstract class BaseBindingActivity<VB : ViewBinding> : AppCompatActivity(),
     //值得注意的是，通过不同作用域 Provider 获得 ViewModel 实例非同一个，
     //故若 ViewModel 状态信息保留不符合预期，可从该角度出发排查 是否眼前 ViewModel 实例非目标实例所致。
     //如这么说无体会，详见 https://xiaozhuanlan.com/topic/6257931840
-    protected open fun <T : ViewModel?> getActivityScopeViewModel(modelClass: Class<T>): T {
-        return mViewModelScope.getActivityScopeViewModel<T>(this, modelClass)
+    protected open fun <T : ViewModel> getActivityScopeViewModel(modelClass: Class<T>): T {
+        return mViewModelScope.getActivityScopeViewModel(this, modelClass)
     }
 
-    protected open fun <T : ViewModel?> getApplicationScopeViewModel(modelClass: Class<T>): T {
-        return mViewModelScope.getApplicationScopeViewModel<T>(modelClass)
+    protected open fun <T : ViewModel> getApplicationScopeViewModel(modelClass: Class<T>): T {
+        return mViewModelScope.getApplicationScopeViewModel(modelClass)
     }
 
 }
