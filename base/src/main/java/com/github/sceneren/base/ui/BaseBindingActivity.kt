@@ -10,11 +10,13 @@ import com.dylanc.loadingstateview.LoadingStateDelegate
 import com.dylanc.loadingstateview.OnReloadListener
 import com.dylanc.viewbinding.base.ActivityBinding
 import com.dylanc.viewbinding.base.ActivityBindingDelegate
+import com.hjq.bar.OnTitleBarListener
+import com.hjq.bar.TitleBar
 import com.kunminx.architecture.ui.scope.ViewModelScope
 
 abstract class BaseBindingActivity<VB : ViewBinding> : AppCompatActivity(),
     LoadingState by LoadingStateDelegate(), OnReloadListener, Decorative,
-    ActivityBinding<VB> by ActivityBindingDelegate() {
+    ActivityBinding<VB> by ActivityBindingDelegate(),OnTitleBarListener {
 
     private val mViewModelScope = ViewModelScope()
 
@@ -51,4 +53,5 @@ abstract class BaseBindingActivity<VB : ViewBinding> : AppCompatActivity(),
     protected open fun <T : ViewModel?> getApplicationScopeViewModel(modelClass: Class<T>): T {
         return mViewModelScope.getApplicationScopeViewModel<T>(modelClass)
     }
+
 }

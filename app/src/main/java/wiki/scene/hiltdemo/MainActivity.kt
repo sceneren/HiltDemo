@@ -9,6 +9,7 @@ import com.github.sceneren.base.event.BaseEvent
 import com.github.sceneren.base.event.BaseRecycleViewEvent
 import com.github.sceneren.base.state.LoadingViewDelegate
 import com.github.sceneren.base.ui.BaseBindingActivity
+import com.hjq.bar.TitleBar
 import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -21,7 +22,6 @@ import wiki.scene.hiltdemo.event.MainEvent
 import wiki.scene.hiltdemo.hilt.factory.MainAdapterFactory
 import wiki.scene.hiltdemo.requester.MainListRequester
 import javax.inject.Inject
-import kotlin.system.exitProcess
 
 @AndroidEntryPoint
 class MainActivity : BaseBindingActivity<ActivityMainBinding>(), OnRefreshListener,
@@ -36,10 +36,6 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>(), OnRefreshListen
         get() = binding.refreshLayout
 
     private var currentPage = 1
-
-    override fun onBackPressed() {
-        exitProcess(0)
-    }
 
     override fun onInitViewModel() {
         mRequester = getActivityScopeViewModel(MainListRequester::class.java)
@@ -62,7 +58,15 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>(), OnRefreshListen
         }
         adapter.loadMoreModule.setOnLoadMoreListener(this)
 
+
+        binding.titleBar.setOnTitleBarListener(this)
     }
+
+    override fun onLeftClick(titleBar: TitleBar?) {
+        super.onLeftClick(titleBar)
+        onBackPressed()
+    }
+
 
     override fun onOutput() {
         super.onOutput()

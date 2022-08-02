@@ -2,6 +2,7 @@ package wiki.scene.hiltdemo
 
 import android.app.Application
 import com.dylanc.loadingstateview.LoadingStateView
+import com.github.sceneren.base.state.ErrorViewDelegate
 import com.github.sceneren.base.state.LoadingViewDelegate
 import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.header.ClassicsHeader
@@ -22,7 +23,7 @@ class App : Application() {
         super.onCreate()
         Logger.addLogAdapter(CustomAndroidLogAdapter())
         LoadingStateView.setViewDelegatePool {
-            register(LoadingViewDelegate())
+            register(LoadingViewDelegate(), ErrorViewDelegate())
         }
 
         RxHttpPlugins.init(null)      //自定义OkHttpClient对象
