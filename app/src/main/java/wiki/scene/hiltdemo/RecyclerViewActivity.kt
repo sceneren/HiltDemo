@@ -17,14 +17,14 @@ import com.tencent.mmkv.MMKV
 import dagger.hilt.android.AndroidEntryPoint
 import wiki.scene.hiltdemo.DataRepository.uid
 import wiki.scene.hiltdemo.adapter.MainAdapter
-import wiki.scene.hiltdemo.databinding.ActivityMainBinding
+import wiki.scene.hiltdemo.databinding.ActivityRecyclerViewBinding
 import wiki.scene.hiltdemo.event.MainEvent
 import wiki.scene.hiltdemo.hilt.factory.MainAdapterFactory
 import wiki.scene.hiltdemo.requester.MainListRequester
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : BaseBindingActivity<ActivityMainBinding>(), OnRefreshListener,
+class RecyclerViewActivity : BaseBindingActivity<ActivityRecyclerViewBinding>(), OnRefreshListener,
     OnLoadMoreListener {
     @Inject
     lateinit var mainAdapterFactory: MainAdapterFactory

@@ -11,7 +11,7 @@ class TestAct : BaseBindingActivity<ActTestBinding>() {
 
     override fun onInitView() {
         binding.button.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, MainAct::class.java))
         }
     }
 }

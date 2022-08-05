@@ -52,6 +52,8 @@ dependencies {
     kapt "com.github.liujingxing.rxhttp:rxhttp-compiler:2.9.0"
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
+
+    implementation 'io.github.h07000223:flycoTabLayout:3.0.0'
 }
 
 // Hilt 处理配置，能解决多 Module 项目依赖造成的编译错误

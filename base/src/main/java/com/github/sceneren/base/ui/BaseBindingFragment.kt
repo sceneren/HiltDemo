@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
@@ -27,12 +25,7 @@ abstract class BaseBindingFragment<VB : ViewBinding> : Fragment(),
     protected lateinit var mActivity: AppCompatActivity
     protected abstract fun onInitViewModel()
 
-    open fun onInitView(
-        @NonNull inflater: LayoutInflater,
-        @Nullable container: ViewGroup?
-    ): View {
-        return createViewWithBinding(inflater, container).decorate(this, this)
-    }
+    protected abstract fun onInitView()
 
     protected open fun onInitData() {}
 
@@ -53,7 +46,9 @@ abstract class BaseBindingFragment<VB : ViewBinding> : Fragment(),
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        return onInitView(inflater, container)
+        val view = createViewWithBinding(inflater, container).decorate(this, this)
+        onInitView()
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

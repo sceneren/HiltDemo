@@ -34,7 +34,8 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainAct" />
+        <activity android:name=".RecyclerViewActivity" />
     </application>
 
 </manifest>
