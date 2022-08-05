@@ -99,7 +99,7 @@ abstract class BaseBindingFragment<VB : ViewBinding> : Fragment(),
      * @return Long
      */
     open fun lazyLoadTime(): Long {
-        return 300
+        return 100
     }
 
     protected open fun <T : ViewModel> getFragmentScopeViewModel(modelClass: Class<T>): T {
