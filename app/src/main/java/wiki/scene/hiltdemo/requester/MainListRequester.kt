@@ -21,7 +21,7 @@ class MainListRequester : MviDispatcher<MainEvent>() {
         when (event.eventId) {
             MainEvent.EVENT_GET_DATA -> {
                 viewModelScope.launch {
-                    RxHttp.get("article/list/%d/json", event.param.page)
+                    RxHttp.get("/article/list/%d/json", event.param.page)
                         .add("page_size", event.param.pageSize)
                         .toFlowResponse<BasePageListDataResponse<ArticleInfo>>()
                         .onStart {
@@ -45,7 +45,6 @@ class MainListRequester : MviDispatcher<MainEvent>() {
                             })
                         }
                         .collect {
-                            Logger.e(it.toString())
                             event.result.list = it.datas
                             event.result.currentPage = event.param.page
                             sendResult(event)

@@ -51,8 +51,5 @@ dependencies {
     api 'com.kunminx.arch:mvi-dispatch:6.0.0-beta'
 
     api 'com.squareup.okhttp3:okhttp:4.10.0'
-    api "com.github.liujingxing.rxhttp:rxhttp:2.9.0"
-    // ksp/kapt/annotationProcessor 选其一
-    kapt "com.github.liujingxing.rxhttp:rxhttp-compiler:2.9.0"
 
 }

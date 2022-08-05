@@ -69,7 +69,6 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
         }
         adapter.loadMoreModule.setOnLoadMoreListener(this)
 
-
     }
 
     override fun onOutput() {
@@ -129,10 +128,10 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
 
     override fun onInput() {
         super.onInput()
-        mRequester.input(MainEvent(MainEvent.EVENT_GET_DATA).apply {
-            param.page = 315
-            param.isFirst = true
-        })
+//        mRequester.input(MainEvent(MainEvent.EVENT_GET_DATA).apply {
+//            param.page = 315
+//            param.isFirst = true
+//        })
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
@@ -146,6 +145,14 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
         mRequester.input(MainEvent(MainEvent.EVENT_GET_DATA).apply {
             param.page = currentPage + 1
             param.isFirst = false
+        })
+    }
+
+    override fun lazyLoadData() {
+        Logger.e("lazyLoadData")
+        mRequester.input(MainEvent(MainEvent.EVENT_GET_DATA).apply {
+            param.page = 315
+            param.isFirst = true
         })
     }
 

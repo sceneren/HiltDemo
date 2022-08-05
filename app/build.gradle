@@ -48,6 +48,7 @@ dependencies {
     implementation 'com.github.sceneren:DebouncedRuntime:1.0.2'
     implementation 'com.orhanobut:logger:2.2.0'
 
+    implementation "com.github.liujingxing.rxhttp:rxhttp:2.9.0"
     // ksp/kapt/annotationProcessor 选其一
     kapt "com.github.liujingxing.rxhttp:rxhttp-compiler:2.9.0"
 
