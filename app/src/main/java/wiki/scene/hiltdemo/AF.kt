@@ -149,7 +149,6 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
     }
 
     override fun lazyLoadData() {
-        Logger.e("lazyLoadData")
         mRequester.input(MainEvent(MainEvent.EVENT_GET_DATA).apply {
             param.page = 315
             param.isFirst = true
