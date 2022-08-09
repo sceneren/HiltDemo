@@ -5,7 +5,7 @@ plugins {
     id 'com.google.dagger.hilt.android'
     id 'kotlin-parcelize'
 }
-apply plugin: 'Debounced'
+apply plugin:"com.github.sceneren.debounced"
 
 android {
     compileSdk 32
@@ -45,7 +45,7 @@ dependencies {
     implementation 'com.google.dagger:hilt-android:2.42'  // 加入 hilt android 依赖库
     kapt 'com.google.dagger:hilt-compiler:2.42'  // 加入 hilt kapt 依赖库
 
-    implementation 'com.github.sceneren:DebouncedRuntime:1.0.2'
+    implementation 'com.github.sceneren:DebouncedRuntime:2.0.2'
     implementation 'com.orhanobut:logger:2.2.0'
 
     implementation "com.github.liujingxing.rxhttp:rxhttp:2.9.0"

@@ -2,7 +2,7 @@
 
 buildscript {
     dependencies {
-        classpath "com.github.sceneren:DebouncedPlugin:1.0.3"
+        classpath "com.github.sceneren:DebouncedPlugin:2.0.2"
     }
 }
 
