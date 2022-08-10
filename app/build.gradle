@@ -55,6 +55,13 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 
     implementation 'io.github.h07000223:flycoTabLayout:3.0.0'
+
+    implementation 'com.airbnb.android:lottie:5.2.0'
+
+    // 基础依赖包，必须要依赖
+    implementation 'com.geyifeng.immersionbar:immersionbar:3.2.2'
+    // kotlin扩展（可选）
+    implementation 'com.geyifeng.immersionbar:immersionbar-ktx:3.2.2'
 }
 
 // Hilt 处理配置，能解决多 Module 项目依赖造成的编译错误

@@ -1,6 +1,7 @@
 package wiki.scene.hiltdemo
 
 import com.github.sceneren.base.ui.BaseBindingActivity
+import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
 import wiki.scene.hiltdemo.databinding.ActMainBinding
 import wiki.scene.hiltdemo.ext.bindViewPager2

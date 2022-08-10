@@ -10,13 +10,11 @@ import com.github.sceneren.base.event.BaseEvent
 import com.github.sceneren.base.event.BaseRecycleViewEvent
 import com.github.sceneren.base.state.LoadingViewDelegate
 import com.github.sceneren.base.ui.BaseBindingFragment
-import com.hjq.bar.OnTitleBarListener
-import com.hjq.bar.TitleBar
+import com.gyf.immersionbar.ktx.immersionBar
 import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import dagger.hilt.android.AndroidEntryPoint
-import rxhttp.wrapper.utils.LogUtil
 import wiki.scene.hiltdemo.adapter.MainAdapter
 import wiki.scene.hiltdemo.databinding.FragABinding
 import wiki.scene.hiltdemo.event.MainEvent
@@ -57,21 +55,27 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
 
     private var lastTime = System.currentTimeMillis()
     override fun onInitView() {
+        immersionBar{
+            statusBarColor(R.color.white)
+            statusBarDarkFont(true)
+            navigationBarColor(R.color.white)
+            navigationBarDarkIcon(true)
+            titleBar(binding.titleBar)
+        }
+
         binding.refreshLayout.setOnRefreshListener(this)
         adapter = mainAdapterFactory.createMainAdapter(1)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
         adapter.setOnItemClickListener { _, _, position ->
-            Logger.e("xxxx===>${System.currentTimeMillis() - lastTime}")
-            lastTime = System.currentTimeMillis()
-//            DataRepository.uid = position.toString()
-//            if (position == 0) {
-//                DataRepository.data = "DataRepository"
-//                UserRepository.data = "UserRepository"
-//            } else {
-//                Logger.e(UserRepository.data)
-//            }
-//            DataRepository.kv.removeValueForKey(DataRepository::uid.name)
+            DataRepository.uid = position.toString()
+            if (position == 0) {
+                DataRepository.data = "DataRepository"
+                UserRepository.data = "UserRepository"
+            } else {
+                Logger.e(UserRepository.data)
+            }
+            DataRepository.kv.removeValueForKey(DataRepository::uid.name)
         }
         adapter.loadMoreModule.setOnLoadMoreListener(this)
 

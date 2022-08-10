@@ -4,6 +4,7 @@ import android.app.Application
 import com.dylanc.loadingstateview.LoadingStateView
 import com.github.sceneren.base.state.ErrorViewDelegate
 import com.github.sceneren.base.state.LoadingViewDelegate
+import com.gyf.immersionbar.ImmersionBar
 import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout

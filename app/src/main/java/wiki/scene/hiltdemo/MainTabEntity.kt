@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import com.flyco.tablayout.listener.CustomTabEntity
 
 class MainTabEntity(
-    val title: String,
+    private val title: String,
     @DrawableRes val selectedIcon: Int,
     @DrawableRes val unSelectedIcon: Int,
     val fragment: Fragment
