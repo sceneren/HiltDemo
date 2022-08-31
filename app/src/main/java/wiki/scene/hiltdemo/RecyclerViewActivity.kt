@@ -4,7 +4,6 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.dylanc.loadingstateview.ViewType
-import com.dylanc.mmkv.*
 import com.github.sceneren.base.event.BaseEvent
 import com.github.sceneren.base.event.BaseRecycleViewEvent
 import com.github.sceneren.base.state.LoadingViewDelegate
@@ -13,9 +12,7 @@ import com.hjq.bar.TitleBar
 import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
-import com.tencent.mmkv.MMKV
 import dagger.hilt.android.AndroidEntryPoint
-import wiki.scene.hiltdemo.DataRepository.uid
 import wiki.scene.hiltdemo.adapter.MainAdapter
 import wiki.scene.hiltdemo.databinding.ActivityRecyclerViewBinding
 import wiki.scene.hiltdemo.event.MainEvent
@@ -42,19 +39,12 @@ class RecyclerViewActivity : BaseBindingActivity<ActivityRecyclerViewBinding>(),
     }
 
     override fun onInitView() {
+
         binding.refreshLayout.setOnRefreshListener(this)
         adapter = mainAdapterFactory.createMainAdapter(1)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         adapter.setOnItemClickListener { _, _, position ->
-            uid = position.toString()
-            if (position == 0) {
-                DataRepository.data = "DataRepository"
-                UserRepository.data = "UserRepository"
-            } else {
-                Logger.e(UserRepository.data)
-            }
-            DataRepository.kv.removeValueForKey(::uid.name)
         }
         adapter.loadMoreModule.setOnLoadMoreListener(this)
 
@@ -145,18 +135,4 @@ class RecyclerViewActivity : BaseBindingActivity<ActivityRecyclerViewBinding>(),
         })
     }
 
-}
-
-
-object DataRepository : MMKVOwner {
-    var isFirstLaunch by mmkvBool(default = true)
-    var bookInfo by mmkvParcelable(default = BookInfo())
-    var count by mmkvInt(default = 0)
-    var data by mmkvString(default = "")
-    var uid by mmkvString(default = "")
-}
-
-object UserRepository : MMKVOwner {
-    override val kv: MMKV = MMKV.mmkvWithID(uid)
-    var data by mmkvString(default = "")
 }

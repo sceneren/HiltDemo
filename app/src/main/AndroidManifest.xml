@@ -28,6 +28,7 @@
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />
+
         <activity
             android:name=".SplashAct"
             android:exported="true">

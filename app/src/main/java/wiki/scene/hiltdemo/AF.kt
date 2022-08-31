@@ -17,8 +17,12 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import dagger.hilt.android.AndroidEntryPoint
 import wiki.scene.hiltdemo.adapter.MainAdapter
 import wiki.scene.hiltdemo.databinding.FragABinding
+import wiki.scene.hiltdemo.entity.UserInfo
 import wiki.scene.hiltdemo.event.MainEvent
 import wiki.scene.hiltdemo.hilt.factory.MainAdapterFactory
+import wiki.scene.hiltdemo.hilt.factory.UserRepositoryFactory
+import wiki.scene.hiltdemo.mmkv.DataRepository
+import wiki.scene.hiltdemo.mmkv.UserRepository
 import wiki.scene.hiltdemo.requester.MainListRequester
 import javax.inject.Inject
 
@@ -30,6 +34,14 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
     @Inject
     lateinit var mainAdapterFactory: MainAdapterFactory
 
+    @Inject
+    lateinit var userRepositoryFactory: UserRepositoryFactory
+
+    private lateinit var userRepository: UserRepository
+
+    @Inject
+    lateinit var dataRepository: DataRepository
+
     private lateinit var mRequester: MainListRequester
     private lateinit var adapter: MainAdapter
 
@@ -37,7 +49,6 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
         get() = binding.refreshLayout
 
     private var currentPage = 1
-
 
     companion object {
         fun newInstance(type: Int): AF {
@@ -53,9 +64,11 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
         mRequester = getActivityScopeViewModel(MainListRequester::class.java)
     }
 
-    private var lastTime = System.currentTimeMillis()
+
     override fun onInitView() {
-        immersionBar{
+        type = requireArguments().getInt("type", 0)
+        userRepository = userRepositoryFactory.createUserRepository(dataRepository.userInfo)
+        immersionBar {
             statusBarColor(R.color.white)
             statusBarDarkFont(true)
             navigationBarColor(R.color.white)
@@ -64,18 +77,20 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
         }
 
         binding.refreshLayout.setOnRefreshListener(this)
-        adapter = mainAdapterFactory.createMainAdapter(1)
+        adapter = mainAdapterFactory.createMainAdapter(type)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
         adapter.setOnItemClickListener { _, _, position ->
-            DataRepository.uid = position.toString()
+            dataRepository.userInfo = UserInfo(
+                uid = position.toString(),
+                name = "name$position",
+            )
             if (position == 0) {
-                DataRepository.data = "DataRepository"
-                UserRepository.data = "UserRepository"
+                dataRepository.data = "DataRepository"
             } else {
-                Logger.e(UserRepository.data)
+                Logger.e("dataRepository.data = ${dataRepository.data}")
             }
-            DataRepository.kv.removeValueForKey(DataRepository::uid.name)
+            //dataRepository.kv.removeValueForKey(dataRepository::userInfo.name)
         }
         adapter.loadMoreModule.setOnLoadMoreListener(this)
 
@@ -138,10 +153,6 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
 
     override fun onInput() {
         super.onInput()
-//        mRequester.input(MainEvent(MainEvent.EVENT_GET_DATA).apply {
-//            param.page = 315
-//            param.isFirst = true
-//        })
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
