@@ -2,7 +2,6 @@ package wiki.scene.hiltdemo
 
 import android.animation.Animator
 import android.content.Intent
-import com.airbnb.lottie.Lottie
 import com.github.sceneren.base.ui.BaseBindingActivity
 import com.gyf.immersionbar.ktx.immersionBar
 import wiki.scene.hiltdemo.databinding.ActSplashBinding
@@ -24,7 +23,6 @@ class SplashAct : BaseBindingActivity<ActSplashBinding>(), Animator.AnimatorList
     }
 
     override fun onAnimationStart(animation: Animator?) {
-
     }
 
     override fun onAnimationEnd(animation: Animator?) {
@@ -42,5 +40,12 @@ class SplashAct : BaseBindingActivity<ActSplashBinding>(), Animator.AnimatorList
 
     }
 
+    override fun onInput() {
+    }
+
+
+    override fun onOutput() {
+
+    }
 
 }

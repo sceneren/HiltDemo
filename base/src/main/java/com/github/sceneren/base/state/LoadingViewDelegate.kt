@@ -25,7 +25,7 @@ class LoadingViewDelegate : LoadingStateView.ViewDelegate(ViewType.LOADING) {
         }
     }
 
-    fun updateMessage(@StringRes resId: Int) {
+    fun updateMessage(@StringRes resId: Int = R.string.base_loading) {
         tvMsg.setText(resId)
     }
 }

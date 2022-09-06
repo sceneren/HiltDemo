@@ -5,23 +5,17 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
-import com.dylanc.loadingstateview.ViewType
 import com.github.sceneren.base.event.BaseEvent
 import com.github.sceneren.base.event.BaseRecycleViewEvent
-import com.github.sceneren.base.state.LoadingViewDelegate
 import com.github.sceneren.base.ui.BaseBindingFragment
 import com.gyf.immersionbar.ktx.immersionBar
-import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import dagger.hilt.android.AndroidEntryPoint
 import wiki.scene.hiltdemo.adapter.MainAdapter
 import wiki.scene.hiltdemo.databinding.FragABinding
-import wiki.scene.hiltdemo.entity.UserInfo
 import wiki.scene.hiltdemo.event.MainEvent
 import wiki.scene.hiltdemo.hilt.factory.MainAdapterFactory
-import wiki.scene.hiltdemo.hilt.factory.UserRepositoryFactory
-import wiki.scene.hiltdemo.mmkv.DataRepository
 import wiki.scene.hiltdemo.mmkv.UserRepository
 import wiki.scene.hiltdemo.requester.MainListRequester
 import javax.inject.Inject
@@ -34,13 +28,13 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
     @Inject
     lateinit var mainAdapterFactory: MainAdapterFactory
 
-    @Inject
-    lateinit var userRepositoryFactory: UserRepositoryFactory
+//    @Inject
+//    lateinit var userRepositoryFactory: UserRepositoryFactory
 
     private lateinit var userRepository: UserRepository
 
-    @Inject
-    lateinit var dataRepository: DataRepository
+//    @Inject
+//    lateinit var dataRepository: DataRepository
 
     private lateinit var mRequester: MainListRequester
     private lateinit var adapter: MainAdapter
@@ -67,7 +61,7 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
 
     override fun onInitView() {
         type = requireArguments().getInt("type", 0)
-        userRepository = userRepositoryFactory.createUserRepository(dataRepository.userInfo)
+//        userRepository = userRepositoryFactory.createUserRepository(dataRepository.userInfo)
         immersionBar {
             statusBarColor(R.color.white)
             statusBarDarkFont(true)
@@ -81,31 +75,29 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
         adapter.setOnItemClickListener { _, _, position ->
-            dataRepository.userInfo = UserInfo(
-                uid = position.toString(),
-                name = "name$position",
-            )
-            if (position == 0) {
-                dataRepository.data = "DataRepository"
-            } else {
-                Logger.e("dataRepository.data = ${dataRepository.data}")
-            }
+//            dataRepository.userInfo = UserInfo(
+//                uid = position.toString(),
+//                name = "name$position",
+//            )
+//            if (position == 0) {
+//                dataRepository.data = "DataRepository"
+//            } else {
+//                Logger.e("dataRepository.data = ${dataRepository.data}")
+//            }
             //dataRepository.kv.removeValueForKey(dataRepository::userInfo.name)
+
+
         }
         adapter.loadMoreModule.setOnLoadMoreListener(this)
 
     }
 
     override fun onOutput() {
-        super.onOutput()
 
         mRequester.output(this) { mainEvent ->
             when (mainEvent.eventId) {
                 BaseEvent.EVENT_SHOW_LOADING_PAGE -> {
                     showLoadingView()
-                    updateView<LoadingViewDelegate>(ViewType.LOADING) {
-                        updateMessage("加载中222...")
-                    }
                 }
                 BaseEvent.EVENT_SHOW_CONTENT_PAGE -> {
                     showContentView()
@@ -114,10 +106,10 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
                     showErrorView()
                 }
                 BaseEvent.EVENT_SHOW_LOADING_DIALOG -> {
-                    Logger.e("showLoadingDialog")
+                    showLoadingDialog()
                 }
                 BaseEvent.EVENT_HIDE_LOADING_DIALOG -> {
-                    Logger.e("hideLoadingDialog")
+                    hideLoadingDialog()
                 }
                 BaseEvent.EVENT_SHOW_TOAST -> {
                     Toast.makeText(activity, mainEvent.result.errorMsg, Toast.LENGTH_SHORT).show()
@@ -137,40 +129,37 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
                 BaseRecycleViewEvent.EVENT_FINISH_LOAD_MORE_FAIL -> {
                     adapter.loadMoreModule.loadMoreFail()
                 }
-                MainEvent.EVENT_GET_DATA -> {
+                MainEvent.EVENT_ADD_DATA -> {
                     currentPage = mainEvent.result.currentPage
-
-                    if (mainEvent.result.currentPage > 1) {
-                        adapter.addData(mainEvent.result.list)
-                    } else {
-                        adapter.setNewInstance(mainEvent.result.list)
-                    }
-
+                    adapter.addData(mainEvent.result.list)
+                }
+                MainEvent.EVENT_REFRESH_DATA -> {
+                    currentPage = mainEvent.result.currentPage
+                    adapter.setNewInstance(mainEvent.result.list)
                 }
             }
         }
     }
 
     override fun onInput() {
-        super.onInput()
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        mRequester.input(MainEvent(MainEvent.EVENT_GET_DATA).apply {
+        mRequester.input(MainEvent(MainEvent.EVENT_REFRESH_DATA).apply {
             param.page = 1
             param.isFirst = false
         })
     }
 
     override fun onLoadMore() {
-        mRequester.input(MainEvent(MainEvent.EVENT_GET_DATA).apply {
+        mRequester.input(MainEvent(MainEvent.EVENT_ADD_DATA).apply {
             param.page = currentPage + 1
             param.isFirst = false
         })
     }
 
     override fun lazyLoadData() {
-        mRequester.input(MainEvent(MainEvent.EVENT_GET_DATA).apply {
+        mRequester.input(MainEvent(MainEvent.EVENT_REFRESH_DATA).apply {
             param.page = 315
             param.isFirst = true
         })

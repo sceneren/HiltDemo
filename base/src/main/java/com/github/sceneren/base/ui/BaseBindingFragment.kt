@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -17,6 +18,8 @@ import com.dylanc.loadingstateview.LoadingStateDelegate
 import com.dylanc.loadingstateview.OnReloadListener
 import com.dylanc.viewbinding.base.FragmentBinding
 import com.dylanc.viewbinding.base.FragmentBindingDelegate
+import com.github.sceneren.base.R
+import com.kongzue.dialogx.dialogs.WaitDialog
 import com.kunminx.architecture.ui.scope.ViewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -38,9 +41,9 @@ abstract class BaseBindingFragment<VB : ViewBinding> : Fragment(),
 
     protected open fun onInitData() {}
 
-    protected open fun onOutput() {}
+    abstract fun onOutput()
 
-    protected open fun onInput() {}
+    abstract fun onInput()
 
     /**
      * 懒加载
@@ -113,5 +116,17 @@ abstract class BaseBindingFragment<VB : ViewBinding> : Fragment(),
 
     protected open fun <T : ViewModel> getApplicationScopeViewModel(modelClass: Class<T>): T {
         return mViewModelScope.getApplicationScopeViewModel(modelClass)
+    }
+
+    protected fun showLoadingDialog(@StringRes resId: Int = R.string.base_loading) {
+        WaitDialog.show(resId)
+    }
+
+    protected fun showLoadingDialog(message: String) {
+        WaitDialog.show(message)
+    }
+
+    protected fun hideLoadingDialog() {
+        WaitDialog.dismiss()
     }
 }

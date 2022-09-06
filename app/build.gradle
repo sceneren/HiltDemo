@@ -42,7 +42,7 @@ android {
 
 dependencies {
     api project(":base")
-    implementation 'com.google.dagger:hilt-android:2.42'  // 加入 hilt android 依赖库
+    implementation 'com.google.dagger:hilt-android:2.42'
     kapt 'com.google.dagger:hilt-compiler:2.42'  // 加入 hilt kapt 依赖库
 
     implementation 'com.github.sceneren:DebouncedRuntime:2.0.4'

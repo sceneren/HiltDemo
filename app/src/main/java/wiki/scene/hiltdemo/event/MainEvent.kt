@@ -5,7 +5,8 @@ import wiki.scene.hiltdemo.entity.ArticleInfo
 
 class MainEvent(eventId: Int) : BaseRecycleViewEvent<MainEvent.Param, MainEvent.Result>(eventId) {
     companion object {
-        const val EVENT_GET_DATA = 1
+        const val EVENT_ADD_DATA = 1
+        const val EVENT_REFRESH_DATA = 2
     }
 
     init {

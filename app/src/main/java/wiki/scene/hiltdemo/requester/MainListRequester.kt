@@ -19,7 +19,7 @@ class MainListRequester : MviDispatcher<MainEvent>() {
     override fun onHandle(event: MainEvent) {
         super.onHandle(event)
         when (event.eventId) {
-            MainEvent.EVENT_GET_DATA -> {
+            MainEvent.EVENT_REFRESH_DATA, MainEvent.EVENT_ADD_DATA -> {
                 viewModelScope.launch {
                     RxHttp.get("/article/list/%d/json", event.param.page)
                         .add("page_size", event.param.pageSize)

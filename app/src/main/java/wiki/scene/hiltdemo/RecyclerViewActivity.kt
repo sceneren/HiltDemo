@@ -59,14 +59,13 @@ class RecyclerViewActivity : BaseBindingActivity<ActivityRecyclerViewBinding>(),
 
 
     override fun onOutput() {
-        super.onOutput()
 
         mRequester.output(this) { mainEvent ->
             when (mainEvent.eventId) {
                 BaseEvent.EVENT_SHOW_LOADING_PAGE -> {
                     showLoadingView()
                     updateView<LoadingViewDelegate>(ViewType.LOADING) {
-                        updateMessage("加载中222...")
+                        updateMessage("加载中...")
                     }
                 }
                 BaseEvent.EVENT_SHOW_CONTENT_PAGE -> {
@@ -76,13 +75,13 @@ class RecyclerViewActivity : BaseBindingActivity<ActivityRecyclerViewBinding>(),
                     showErrorView()
                 }
                 BaseEvent.EVENT_SHOW_LOADING_DIALOG -> {
-                    Logger.e("showLoadingDialog")
+                    showLoadingDialog()
                 }
                 BaseEvent.EVENT_HIDE_LOADING_DIALOG -> {
-                    Logger.e("hideLoadingDialog")
+                    hideLoadingDialog()
                 }
                 BaseEvent.EVENT_SHOW_TOAST -> {
-                    Logger.e("showToast")
+                    Logger.e(mainEvent.result.errorMsg)
                 }
                 BaseRecycleViewEvent.EVENT_FINISH_REFRESH_SUCCESS -> {
                     binding.refreshLayout.finishRefresh(true)
@@ -99,37 +98,34 @@ class RecyclerViewActivity : BaseBindingActivity<ActivityRecyclerViewBinding>(),
                 BaseRecycleViewEvent.EVENT_FINISH_LOAD_MORE_FAIL -> {
                     adapter.loadMoreModule.loadMoreFail()
                 }
-                MainEvent.EVENT_GET_DATA -> {
+                MainEvent.EVENT_ADD_DATA -> {
                     currentPage = mainEvent.result.currentPage
-
-                    if (mainEvent.result.currentPage > 1) {
-                        adapter.addData(mainEvent.result.list)
-                    } else {
-                        adapter.setNewInstance(mainEvent.result.list)
-                    }
-
+                    adapter.addData(mainEvent.result.list)
+                }
+                MainEvent.EVENT_REFRESH_DATA -> {
+                    currentPage = mainEvent.result.currentPage
+                    adapter.setNewInstance(mainEvent.result.list)
                 }
             }
         }
     }
 
     override fun onInput() {
-        super.onInput()
-        mRequester.input(MainEvent(MainEvent.EVENT_GET_DATA).apply {
+        mRequester.input(MainEvent(MainEvent.EVENT_REFRESH_DATA).apply {
             param.page = 315
             param.isFirst = true
         })
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        mRequester.input(MainEvent(MainEvent.EVENT_GET_DATA).apply {
+        mRequester.input(MainEvent(MainEvent.EVENT_REFRESH_DATA).apply {
             param.page = 1
             param.isFirst = false
         })
     }
 
     override fun onLoadMore() {
-        mRequester.input(MainEvent(MainEvent.EVENT_GET_DATA).apply {
+        mRequester.input(MainEvent(MainEvent.EVENT_ADD_DATA).apply {
             param.page = currentPage + 1
             param.isFirst = false
         })
