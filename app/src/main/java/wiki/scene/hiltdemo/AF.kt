@@ -2,8 +2,10 @@ package wiki.scene.hiltdemo
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.KeyboardUtils
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.github.sceneren.base.event.BaseEvent
 import com.github.sceneren.base.event.BaseRecycleViewEvent
@@ -63,11 +65,14 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
         type = requireArguments().getInt("type", 0)
 //        userRepository = userRepositoryFactory.createUserRepository(dataRepository.userInfo)
         immersionBar {
+            keyboardEnable(true)
             statusBarColor(R.color.white)
             statusBarDarkFont(true)
             navigationBarColor(R.color.white)
             navigationBarDarkIcon(true)
-            titleBar(binding.titleBar)
+            titleBar(binding.titleBar.apply {
+                title = "主页"
+            })
         }
 
         binding.refreshLayout.setOnRefreshListener(this)
@@ -142,6 +147,11 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
     }
 
     override fun onInput() {
+    }
+
+    override fun onPause() {
+        super.onPause()
+    KeyboardUtils.clickBlankArea2HideSoftInput()
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {

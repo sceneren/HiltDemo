@@ -11,12 +11,14 @@
     <com.hjq.bar.TitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="50dp"
+        app:leftIcon="@null" />
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         app:srlEnableAutoLoadMore="false">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -28,6 +30,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-
 
 </LinearLayout>

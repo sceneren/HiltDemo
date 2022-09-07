@@ -1,10 +1,14 @@
 package com.github.sceneren.base.ui
 
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
+import android.widget.EditText
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
+import com.blankj.utilcode.util.KeyboardUtils
 import com.dylanc.loadingstateview.Decorative
 import com.dylanc.loadingstateview.LoadingState
 import com.dylanc.loadingstateview.LoadingStateDelegate
@@ -68,6 +72,33 @@ abstract class BaseBindingActivity<VB : ViewBinding> : AppCompatActivity(),
 
     protected fun hideLoadingDialog() {
         WaitDialog.dismiss()
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        if (ev.action == MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+            v?.let {
+                if (isShouldHideKeyboard(v, ev)) {
+                    KeyboardUtils.hideSoftInput(this)
+                    v.clearFocus()
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev)
+    }
+
+    private fun isShouldHideKeyboard(v: View, event: MotionEvent): Boolean {
+        if ((v is EditText)) {
+            val l = intArrayOf(0, 0)
+            v.getLocationOnScreen(l)
+            val left = l[0]
+            val top = l[1]
+            val bottom = top + v.getHeight()
+            val right = left + v.getWidth()
+            return !(event.rawX > left && event.rawX < right
+                    && event.rawY > top && event.rawY < bottom)
+        }
+        return false
     }
 
 }
