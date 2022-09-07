@@ -2,7 +2,6 @@ package wiki.scene.hiltdemo
 
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.KeyboardUtils
@@ -151,7 +150,7 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
 
     override fun onPause() {
         super.onPause()
-    KeyboardUtils.clickBlankArea2HideSoftInput()
+        KeyboardUtils.clickBlankArea2HideSoftInput()
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
