@@ -19,6 +19,8 @@ import com.dylanc.loadingstateview.OnReloadListener
 import com.dylanc.viewbinding.base.FragmentBinding
 import com.dylanc.viewbinding.base.FragmentBindingDelegate
 import com.github.sceneren.base.R
+import com.gyf.immersionbar.ktx.immersionBar
+import com.hjq.bar.TitleBar
 import com.kongzue.dialogx.dialogs.WaitDialog
 import com.kunminx.architecture.ui.scope.ViewModelScope
 import kotlinx.coroutines.delay
@@ -63,8 +65,10 @@ abstract class BaseBindingFragment<VB : ViewBinding> : Fragment(),
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        val view = createViewWithBinding(inflater, container).decorate(this, this)
+        val view = createViewWithBinding(inflater, container)
+        view.decorate(this, this)
         onInitView()
+        initImmersionBar()
         return view
     }
 
@@ -104,6 +108,28 @@ abstract class BaseBindingFragment<VB : ViewBinding> : Fragment(),
      */
     open fun lazyLoadTime(): Long {
         return 100
+    }
+
+    private fun initImmersionBar() {
+        immersionBar {
+            keyboardEnable(true)
+            statusBarDarkFont(!setStatusBarWhiteIcon())
+            navigationBarDarkIcon(!setNavigationBarWhiteIcon())
+            titleBar(injectTitleBar())
+        }
+    }
+
+
+    open fun injectTitleBar(): TitleBar? {
+        return null
+    }
+
+    open fun setStatusBarWhiteIcon(): Boolean {
+        return false
+    }
+
+    open fun setNavigationBarWhiteIcon(): Boolean {
+        return false
     }
 
     protected open fun <T : ViewModel> getFragmentScopeViewModel(modelClass: Class<T>): T {

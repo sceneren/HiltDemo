@@ -1,15 +1,11 @@
 package wiki.scene.hiltdemo
 
 import android.app.Application
-import com.dylanc.loadingstateview.LoadingStateView
-import com.github.sceneren.base.state.ErrorViewDelegate
-import com.github.sceneren.base.state.LoadingViewDelegate
-import com.gyf.immersionbar.ImmersionBar
-import com.orhanobut.logger.Logger
+import android.content.Context
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.therouter.TheRouter
 import dagger.hilt.android.HiltAndroidApp
-import rxhttp.RxHttpPlugins
 
 
 @HiltAndroidApp
@@ -20,30 +16,10 @@ class App : Application() {
         }
     }
 
-    override fun onCreate() {
-        super.onCreate()
-        Logger.addLogAdapter(CustomAndroidLogAdapter())
-        LoadingStateView.setViewDelegatePool {
-            register(LoadingViewDelegate(), ErrorViewDelegate())
-        }
-
-        RxHttpPlugins.init(null)      //自定义OkHttpClient对象
-            .setDebug(BuildConfig.DEBUG)
-            .setOnParamAssembly {
-                //可以在此处添加全局参数和全局请求头
-                val method = it.method
-                it.addHeader("requestToken", "token")
-                if (method.isGet) {
-                    it.add("requestType", "get")
-                } else {
-                    it.addHeader("username", "sceneren")
-                    it.addHeader("password", "123456")
-                }
-                return@setOnParamAssembly it
-            }
-            .setResultDecoder {
-                Logger.e("resultDecoder:$it")
-                return@setResultDecoder it
-            }
+    override fun attachBaseContext(base: Context?) {
+        TheRouter.isDebug = BuildConfig.DEBUG
+        super.attachBaseContext(base)
     }
+
+
 }

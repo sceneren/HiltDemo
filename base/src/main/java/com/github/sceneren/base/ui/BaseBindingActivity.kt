@@ -16,7 +16,9 @@ import com.dylanc.loadingstateview.OnReloadListener
 import com.dylanc.viewbinding.base.ActivityBinding
 import com.dylanc.viewbinding.base.ActivityBindingDelegate
 import com.github.sceneren.base.R
+import com.gyf.immersionbar.ktx.immersionBar
 import com.hjq.bar.OnTitleBarListener
+import com.hjq.bar.TitleBar
 import com.kongzue.dialogx.dialogs.WaitDialog
 import com.kunminx.architecture.ui.scope.ViewModelScope
 
@@ -38,13 +40,40 @@ abstract class BaseBindingActivity<VB : ViewBinding> : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentViewWithBinding()
+
         binding.root.decorate(this, this)
+
         onInitViewModel()
         onInitView()
+
+        initImmersionBar()
+
         onInitData()
         onOutput()
         onInput()
+    }
+
+    private fun initImmersionBar() {
+        immersionBar {
+            keyboardEnable(true)
+            statusBarDarkFont(!setStatusBarWhiteIcon())
+            navigationBarDarkIcon(!setNavigationBarWhiteIcon())
+            titleBar(injectTitleBar())
+        }
+    }
+
+    open fun injectTitleBar(): TitleBar? {
+        return null
+    }
+
+    open fun setStatusBarWhiteIcon(): Boolean {
+        return false
+    }
+
+    open fun setNavigationBarWhiteIcon(): Boolean {
+        return false
     }
 
     /**

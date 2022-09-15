@@ -3,8 +3,10 @@
 buildscript {
     dependencies {
         classpath "com.github.sceneren:DebouncedPlugin:2.0.4"
+        classpath "cn.therouter:plugin:1.1.1-rc1"
     }
 }
+
 
 plugins {
     id 'com.android.application' version '7.2.0' apply false
@@ -12,6 +14,8 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
     id 'com.google.dagger.hilt.android' version '2.42' apply false
 }
+
+def theRouterVersion = "1.1.1-rc1"
 
 task clean(type: Delete) {
     delete rootProject.buildDir

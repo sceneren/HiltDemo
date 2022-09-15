@@ -1,7 +1,9 @@
 package wiki.scene.hiltdemo
 
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.dylanc.loadingstateview.ViewType
 import com.github.sceneren.base.event.BaseEvent
@@ -9,9 +11,11 @@ import com.github.sceneren.base.event.BaseRecycleViewEvent
 import com.github.sceneren.base.state.LoadingViewDelegate
 import com.github.sceneren.base.ui.BaseBindingActivity
 import com.hjq.bar.TitleBar
-import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.therouter.TheRouter
+import com.therouter.router.Autowired
+import com.therouter.router.Route
 import dagger.hilt.android.AndroidEntryPoint
 import wiki.scene.hiltdemo.adapter.MainAdapter
 import wiki.scene.hiltdemo.databinding.ActivityRecyclerViewBinding
@@ -20,9 +24,19 @@ import wiki.scene.hiltdemo.hilt.factory.MainAdapterFactory
 import wiki.scene.hiltdemo.requester.MainListRequester
 import javax.inject.Inject
 
+@Route(path = "http://therouter.com/RecyclerViewActivity", params = ["id", "title"])
 @AndroidEntryPoint
 class RecyclerViewActivity : BaseBindingActivity<ActivityRecyclerViewBinding>(), OnRefreshListener,
     OnLoadMoreListener {
+
+    @JvmField
+    @Autowired
+    var id: Int = 0
+
+    @JvmField
+    @Autowired
+    var title: String = ""
+
     @Inject
     lateinit var mainAdapterFactory: MainAdapterFactory
 
@@ -33,6 +47,11 @@ class RecyclerViewActivity : BaseBindingActivity<ActivityRecyclerViewBinding>(),
         get() = binding.refreshLayout
 
     private var currentPage = 1
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        TheRouter.inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onInitViewModel() {
         mRequester = getActivityScopeViewModel(MainListRequester::class.java)
@@ -48,8 +67,13 @@ class RecyclerViewActivity : BaseBindingActivity<ActivityRecyclerViewBinding>(),
         }
         adapter.loadMoreModule.setOnLoadMoreListener(this)
 
-
         binding.titleBar.setOnTitleBarListener(this)
+        LogUtils.e("====>title2:$title")
+        binding.titleBar.title = "$id-$title"
+    }
+
+    override fun injectTitleBar(): TitleBar {
+        return binding.titleBar
     }
 
     override fun onLeftClick(titleBar: TitleBar?) {
@@ -81,7 +105,7 @@ class RecyclerViewActivity : BaseBindingActivity<ActivityRecyclerViewBinding>(),
                     hideLoadingDialog()
                 }
                 BaseEvent.EVENT_SHOW_TOAST -> {
-                    Logger.e(mainEvent.result.errorMsg)
+                    LogUtils.e(mainEvent.result.errorMsg)
                 }
                 BaseRecycleViewEvent.EVENT_FINISH_REFRESH_SUCCESS -> {
                     binding.refreshLayout.finishRefresh(true)

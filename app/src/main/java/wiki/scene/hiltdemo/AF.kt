@@ -5,13 +5,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.KeyboardUtils
+import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.github.sceneren.base.event.BaseEvent
 import com.github.sceneren.base.event.BaseRecycleViewEvent
 import com.github.sceneren.base.ui.BaseBindingFragment
-import com.gyf.immersionbar.ktx.immersionBar
+import com.hjq.bar.TitleBar
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.therouter.TheRouter
 import dagger.hilt.android.AndroidEntryPoint
 import wiki.scene.hiltdemo.adapter.MainAdapter
 import wiki.scene.hiltdemo.databinding.FragABinding
@@ -63,16 +65,7 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
     override fun onInitView() {
         type = requireArguments().getInt("type", 0)
 //        userRepository = userRepositoryFactory.createUserRepository(dataRepository.userInfo)
-        immersionBar {
-            keyboardEnable(true)
-            statusBarColor(R.color.white)
-            statusBarDarkFont(true)
-            navigationBarColor(R.color.white)
-            navigationBarDarkIcon(true)
-            titleBar(binding.titleBar.apply {
-                title = "主页"
-            })
-        }
+
 
         binding.refreshLayout.setOnRefreshListener(this)
         adapter = mainAdapterFactory.createMainAdapter(type)
@@ -90,6 +83,11 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
 //            }
             //dataRepository.kv.removeValueForKey(dataRepository::userInfo.name)
 
+            LogUtils.e("====>title2:${adapter.data[position].title}")
+            TheRouter.build("http://therouter.com/RecyclerViewActivity")
+                .withInt("id", position)
+                .withString("title", adapter.data[position].title)
+                .navigation()
 
         }
         adapter.loadMoreModule.setOnLoadMoreListener(this)
@@ -142,6 +140,12 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
                     adapter.setNewInstance(mainEvent.result.list)
                 }
             }
+        }
+    }
+
+    override fun injectTitleBar(): TitleBar {
+        return binding.titleBar.apply {
+            title="主页-$type"
         }
     }
 

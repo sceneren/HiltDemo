@@ -1,9 +1,9 @@
 package wiki.scene.hiltdemo.adapter
 
+import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.orhanobut.logger.Logger
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import wiki.scene.hiltdemo.R
@@ -13,7 +13,7 @@ class MainAdapter @AssistedInject constructor(@Assisted val type: Int) :
     BaseQuickAdapter<ArticleInfo, BaseViewHolder>(R.layout.activity_recycler_view_item),
     LoadMoreModule {
     init {
-        Logger.e("===>type:$type")
+        LogUtils.e("===>type:$type")
     }
 
     override fun convert(holder: BaseViewHolder, item: ArticleInfo) {

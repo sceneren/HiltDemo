@@ -5,11 +5,10 @@ import android.content.Intent
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.lifecycle.LifecycleOwner
+import com.blankj.utilcode.util.LogUtils
 import com.github.sceneren.base.ui.BaseBindingActivity
 import com.gyf.immersionbar.BarHide
-import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.ktx.immersionBar
-import com.orhanobut.logger.Logger
 import wiki.scene.hiltdemo.databinding.ActSplashBinding
 
 class SplashAct : BaseBindingActivity<ActSplashBinding>(), Animator.AnimatorListener {
@@ -19,16 +18,11 @@ class SplashAct : BaseBindingActivity<ActSplashBinding>(), Animator.AnimatorList
 
     override fun onInitView() {
         immersionBar {
-            statusBarColor(R.color.white)
-            fitsSystemWindows(true)
-            statusBarDarkFont(true)
-            navigationBarColor(R.color.white)
-            navigationBarDarkIcon(true)
             hideBar(BarHide.FLAG_HIDE_NAVIGATION_BAR)
         }
         binding.lav.addAnimatorListener(this)
         onBackPressedDispatcher.handleOnBackPressed(this) {
-            Logger.e("onBackPressed")
+            LogUtils.e("onBackPressed")
         }
     }
 

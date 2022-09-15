@@ -1,6 +1,6 @@
 package wiki.scene.hiltdemo.network
 
-import com.orhanobut.logger.Logger
+import com.blankj.utilcode.util.LogUtils
 import okhttp3.RequestBody
 import rxhttp.wrapper.annotation.Param
 import rxhttp.wrapper.param.FormParam
@@ -20,9 +20,9 @@ import rxhttp.wrapper.param.Method
 class PostEncryptFormParam(url: String) : FormParam(url, Method.POST) {
 
     override fun getRequestBody(): RequestBody {
-        Logger.e("bodyParam===>$bodyParam")
-        Logger.e("queryParam===>$queryParam")
-        Logger.e("headers===>$headers")
+        LogUtils.e("bodyParam===>$bodyParam")
+        LogUtils.e("queryParam===>$queryParam")
+        LogUtils.e("headers===>$headers")
         addHeader("bodyParam", bodyParam.toString())
         return super.getRequestBody()
     }

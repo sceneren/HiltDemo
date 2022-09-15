@@ -9,7 +9,17 @@ import com.github.sceneren.base.R
 
 class ErrorViewDelegate : LoadingStateView.ViewDelegate(ViewType.ERROR) {
 
-    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup): View {
-        return inflater.inflate(R.layout.layout_error, parent, false)
+    override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup): View =
+        inflater.inflate(R.layout.layout_error, parent, false).apply {
+            findViewById<View>(R.id.iv_error).setOnClickListener {
+                reload()
+            }
+            findViewById<View>(R.id.tv_msg).setOnClickListener {
+                reload()
+            }
+        }
+
+    fun reload() {
+        onReloadListener?.onReload()
     }
 }

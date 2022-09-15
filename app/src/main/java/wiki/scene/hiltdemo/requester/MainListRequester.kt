@@ -1,10 +1,10 @@
 package wiki.scene.hiltdemo.requester
 
 import androidx.lifecycle.viewModelScope
+import com.blankj.utilcode.util.LogUtils
 import com.github.sceneren.base.event.BaseEvent
 import com.github.sceneren.base.event.BaseRecycleViewEvent
 import com.kunminx.architecture.domain.dispatch.MviDispatcher
-import com.orhanobut.logger.Logger
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
@@ -30,7 +30,7 @@ class MainListRequester : MviDispatcher<MainEvent>() {
                             }
                         }
                         .catch {
-                            Logger.e(it.msg)
+                            LogUtils.e(it.msg)
                             if (event.result.isFirst) {
                                 sendResult(MainEvent(BaseEvent.EVENT_SHOW_ERROR_PAGE))
                             } else {
