@@ -22,7 +22,7 @@ class MainAct : BaseBindingActivity<ActMainBinding>() {
                     "标题2",
                     R.drawable.tab_home_select,
                     R.drawable.tab_home_unselect,
-                    AF.newInstance(1)
+                    BFrag.newInstance(1)
                 ),
                 MainTabEntity(
                     "标题3",
