@@ -1,25 +1,11 @@
 [
   {
-    "path": "http://therouter.com/RecyclerViewActivity",
+    "path": "/app/RecyclerViewActivity",
     "className": "wiki.scene.hiltdemo.RecyclerViewActivity",
     "action": "",
     "description": "",
     "params": {
       "id": "title"
     }
-  },
-  {
-    "path": "http://therouter.com/RecyclerViewActivity",
-    "className": "wiki.scene.hiltdemo.RecyclerViewActivity",
-    "action": "",
-    "description": "",
-    "params": {}
-  },
-  {
-    "path": "/main/RecyclerViewActivity",
-    "className": "wiki.scene.hiltdemo.RecyclerViewActivity",
-    "action": "",
-    "description": "",
-    "params": {}
   }
 ]

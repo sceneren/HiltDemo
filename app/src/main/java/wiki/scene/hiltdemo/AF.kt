@@ -84,7 +84,7 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
             //dataRepository.kv.removeValueForKey(dataRepository::userInfo.name)
 
             LogUtils.e("====>title2:${adapter.data[position].title}")
-            TheRouter.build("http://therouter.com/RecyclerViewActivity")
+            TheRouter.build("/app/RecyclerViewActivity")
                 .withInt("id", position)
                 .withString("title", adapter.data[position].title)
                 .navigation()

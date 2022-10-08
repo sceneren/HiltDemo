@@ -27,6 +27,10 @@ android {
         jvmTarget = '1.8'
     }
     namespace 'com.github.sceneren.base'
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {

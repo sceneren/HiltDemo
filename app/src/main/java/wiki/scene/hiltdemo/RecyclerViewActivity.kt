@@ -24,7 +24,7 @@ import wiki.scene.hiltdemo.hilt.factory.MainAdapterFactory
 import wiki.scene.hiltdemo.requester.MainListRequester
 import javax.inject.Inject
 
-@Route(path = "http://therouter.com/RecyclerViewActivity", params = ["id", "title"])
+@Route(path = "/app/RecyclerViewActivity", params = ["id", "title"])
 @AndroidEntryPoint
 class RecyclerViewActivity : BaseBindingActivity<ActivityRecyclerViewBinding>(), OnRefreshListener,
     OnLoadMoreListener {
