@@ -10,6 +10,7 @@ import com.therouter.router.Autowired
 import com.therouter.router.Route
 import wiki.scene.hiltdemo.AF
 import wiki.scene.hiltdemo.databinding.FragHomeBinding
+import wiki.scene.hiltdemo.ext.bindViewPage2
 import wiki.scene.hiltdemo.ui.home.event.HomeEvent
 import wiki.scene.hiltdemo.ui.home.viewmodel.HomeViewModel
 
@@ -54,12 +55,14 @@ class HomeFrag : BaseBindingFragment<FragHomeBinding>() {
                 }
                 HomeEvent.EVENT_PROJECT_TREE -> {
                     LogUtils.e(it.result.list)
-                    val titleArray = it.result.list.map { info -> info.name }.toTypedArray()
-                    val fragmentArray = it.result.list.map { info -> AF.newInstance(info.id) }
-                        .toList() as ArrayList<Fragment>
-
-                    binding.tabLayout.setViewPager(
-                        binding.viewPager, titleArray, mActivity, fragmentArray
+                    val titleList = mutableListOf<String>()
+                    val fragmentList = mutableListOf<Fragment>()
+                    it.result.list.forEach { info ->
+                        titleList.add(info.name)
+                        fragmentList.add(AF.newInstance(info.id))
+                    }
+                    binding.magicIndicator.bindViewPage2(
+                        this, binding.viewPager2, titleList
                     )
                 }
             }
@@ -76,5 +79,6 @@ class HomeFrag : BaseBindingFragment<FragHomeBinding>() {
     override fun statusPageContentView(): View {
         return binding.contentView
     }
+
 
 }

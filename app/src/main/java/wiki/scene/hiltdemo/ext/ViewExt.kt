@@ -5,10 +5,13 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.flyco.tablayout.CommonTabLayout
-import com.flyco.tablayout.SlidingTabLayout
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
+import net.lucode.hackware.magicindicator.MagicIndicator
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
+import wiki.scene.hiltdemo.AF
 import wiki.scene.hiltdemo.MainTabEntity
+import wiki.scene.hiltdemo.widget.indicator.LineNavigatorAdapter
 
 fun CommonTabLayout.bindViewPager2(
     act: FragmentActivity, vp2: ViewPager2, tabList: List<MainTabEntity>
@@ -50,24 +53,21 @@ fun CommonTabLayout.bindViewPager2(
 
 }
 
-fun SlidingTabLayout.bindViewPage2(
+fun MagicIndicator.bindViewPage2(
     fragment: Fragment,
-    vp2: ViewPager2,
+    viewPager2: ViewPager2,
     titleList: List<String>,
-    fragmentList: MutableList<Fragment>
+//    fragmentList: List<Fragment>
 ) {
-    titleList.forEach {
-        addNewTab(it)
+    this.navigator = CommonNavigator(context).apply {
+        adapter = LineNavigatorAdapter(titleList, viewPager2)
     }
 
-
-    vp2.run {
-        //是否可滑动
-        isUserInputEnabled = false
-        offscreenPageLimit = 4
+    viewPager2.run {
+        offscreenPageLimit = titleList.size
         adapter = object : FragmentStateAdapter(fragment) {
             override fun createFragment(position: Int): Fragment {
-                return fragmentList[position]
+                return AF.newInstance(position)
             }
 
             override fun getItemCount(): Int {
@@ -75,20 +75,69 @@ fun SlidingTabLayout.bindViewPage2(
             }
 
         }
+
         registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                this@bindViewPage2.currentTab = position
+                super.onPageSelected(position)
+                this@bindViewPage2.onPageSelected(position)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+                this@bindViewPage2.onPageScrollStateChanged(state)
+            }
+
+            override fun onPageScrolled(
+                position: Int, positionOffset: Float, positionOffsetPixels: Int
+            ) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                this@bindViewPage2.onPageScrolled(position, positionOffset, positionOffsetPixels)
             }
         })
-
     }
 
-    setOnTabSelectListener(object : OnTabSelectListener {
-        override fun onTabSelect(position: Int) {
-            vp2.setCurrentItem(position, false)
+}
+
+fun MagicIndicator.bindViewPage2(
+    activity: FragmentActivity,
+    viewPager2: ViewPager2,
+    titleList: List<String>,
+    fragmentList: List<Fragment>
+) {
+    this.navigator = CommonNavigator(context).apply {
+        LineNavigatorAdapter(titleList, viewPager2)
+    }
+
+    viewPager2.run {
+        adapter = object : FragmentStateAdapter(activity) {
+            override fun createFragment(position: Int): Fragment {
+                return fragmentList[position]
+            }
+
+            override fun getItemCount(): Int {
+                return fragmentList.size
+            }
+
         }
 
-        override fun onTabReselect(position: Int) {
-        }
-    })
+        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                this@bindViewPage2.onPageSelected(position)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+                this@bindViewPage2.onPageScrollStateChanged(state)
+            }
+
+            override fun onPageScrolled(
+                position: Int, positionOffset: Float, positionOffsetPixels: Int
+            ) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                this@bindViewPage2.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
+        })
+    }
+
 }

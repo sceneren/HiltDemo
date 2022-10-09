@@ -17,26 +17,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.flyco.tablayout.SlidingTabLayout
-            android:id="@+id/tab_layout"
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/magic_indicator"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="#EEEEEE"
-            app:tl_divider_color="#1A000000"
-            app:tl_divider_padding="13dp"
-            app:tl_divider_width="1dp"
-            app:tl_indicator_color="#000000"
-            app:tl_indicator_height="1.5dp"
-            app:tl_indicator_width_equal_title="true"
-            app:tl_tab_padding="22dp"
-            app:tl_tab_space_equal="true"
-            app:tl_textSelectColor="#000000"
-            app:tl_textUnselectColor="#66000000"
-            app:tl_underline_color="#1A000000"
-            app:tl_underline_height="1dp" />
+            android:layout_height="50dp" />
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_pager"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager2"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

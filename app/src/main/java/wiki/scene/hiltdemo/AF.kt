@@ -167,4 +167,24 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        LogUtils.e("$type====>onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LogUtils.e("$type====>onPause")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        LogUtils.e("$type====>onDestroyView")
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        LogUtils.e("$type====>onCreate")
+    }
+
 }
