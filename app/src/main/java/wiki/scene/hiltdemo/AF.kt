@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.github.sceneren.base.event.BaseEvent
 import com.github.sceneren.base.event.BaseRecycleViewEvent
 import com.github.sceneren.base.ui.BaseBindingFragment
-import com.hjq.bar.TitleBar
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.therouter.TheRouter
@@ -42,9 +40,6 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
     private lateinit var mRequester: MainListRequester
     private lateinit var adapter: MainAdapter
 
-    override val contentView: View
-        get() = binding.refreshLayout
-
     private var currentPage = 1
 
     companion object {
@@ -57,8 +52,12 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
         }
     }
 
+    override fun statusPageContentView(): View {
+        return binding.refreshLayout
+    }
+
     override fun onInitViewModel() {
-        mRequester = getActivityScopeViewModel(MainListRequester::class.java)
+        mRequester = getFragmentScopeViewModel(MainListRequester::class.java)
     }
 
 
@@ -143,18 +142,8 @@ class AF : BaseBindingFragment<FragABinding>(), OnRefreshListener,
         }
     }
 
-    override fun injectTitleBar(): TitleBar {
-        return binding.titleBar.apply {
-            title="主页-$type"
-        }
-    }
 
     override fun onInput() {
-    }
-
-    override fun onPause() {
-        super.onPause()
-        KeyboardUtils.clickBlankArea2HideSoftInput()
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {

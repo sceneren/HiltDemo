@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".RecyclerViewActivity">
+    tools:context=".ui.recyclerview.RecyclerViewActivity">
 
     <TextView
         android:id="@+id/tv_title"

@@ -41,7 +41,6 @@ object Init {
                 return@setOnParamAssembly it
             }
             .setResultDecoder {
-                LogUtils.e("resultDecoder:$it")
                 return@setResultDecoder it
             }
     }

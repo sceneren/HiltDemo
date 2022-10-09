@@ -1,11 +1,16 @@
 [
   {
     "path": "/app/RecyclerViewActivity",
-    "className": "wiki.scene.hiltdemo.RecyclerViewActivity",
+    "className": "wiki.scene.hiltdemo.ui.recyclerview.RecyclerViewActivity",
     "action": "",
     "description": "",
-    "params": {
-      "id": "title"
-    }
+    "params": {}
+  },
+  {
+    "path": "/app/HomeFrag",
+    "className": "wiki.scene.hiltdemo.ui.home.HomeFrag",
+    "action": "",
+    "description": "",
+    "params": {}
   }
 ]

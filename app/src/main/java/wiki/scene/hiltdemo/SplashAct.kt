@@ -10,6 +10,7 @@ import com.github.sceneren.base.ui.BaseBindingActivity
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ktx.immersionBar
 import wiki.scene.hiltdemo.databinding.ActSplashBinding
+import wiki.scene.hiltdemo.ui.main.MainAct
 
 class SplashAct : BaseBindingActivity<ActSplashBinding>(), Animator.AnimatorListener {
 

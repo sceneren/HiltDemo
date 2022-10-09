@@ -64,7 +64,7 @@ dependencies {
 
     api 'com.blankj:utilcodex:1.31.0'
 
-    api "cn.therouter:router:1.1.1-rc1"
+    api "cn.therouter:router:1.1.1-rc3"
 
     // 基础依赖包，必须要依赖
     api 'com.geyifeng.immersionbar:immersionbar:3.2.2'

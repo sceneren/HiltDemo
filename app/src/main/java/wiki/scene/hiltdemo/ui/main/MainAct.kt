@@ -1,7 +1,12 @@
-package wiki.scene.hiltdemo
+package wiki.scene.hiltdemo.ui.main
 
 import com.github.sceneren.base.ui.BaseBindingActivity
+import com.therouter.TheRouter
 import dagger.hilt.android.AndroidEntryPoint
+import wiki.scene.hiltdemo.AF
+import wiki.scene.hiltdemo.BFrag
+import wiki.scene.hiltdemo.MainTabEntity
+import wiki.scene.hiltdemo.R
 import wiki.scene.hiltdemo.databinding.ActMainBinding
 import wiki.scene.hiltdemo.ext.bindViewPager2
 
@@ -16,21 +21,21 @@ class MainAct : BaseBindingActivity<ActMainBinding>() {
                     "标题1",
                     R.drawable.tab_home_select,
                     R.drawable.tab_home_unselect,
-                    AF.newInstance(0)
-                ),
-                MainTabEntity(
+                    TheRouter.build("/app/HomeFrag")
+                        .withString("typeName", "这是标题")
+                        .withInt("type", 0)
+                        .createFragment()!!
+                ), MainTabEntity(
                     "标题2",
                     R.drawable.tab_home_select,
                     R.drawable.tab_home_unselect,
                     BFrag.newInstance(1)
-                ),
-                MainTabEntity(
+                ), MainTabEntity(
                     "标题3",
                     R.drawable.tab_home_select,
                     R.drawable.tab_home_unselect,
                     AF.newInstance(2)
-                ),
-                MainTabEntity(
+                ), MainTabEntity(
                     "标题4",
                     R.drawable.tab_home_select,
                     R.drawable.tab_home_unselect,

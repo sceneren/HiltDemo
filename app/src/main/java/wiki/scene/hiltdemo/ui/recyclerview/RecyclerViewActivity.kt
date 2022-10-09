@@ -1,6 +1,5 @@
-package wiki.scene.hiltdemo
+package wiki.scene.hiltdemo.ui.recyclerview
 
-import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.LogUtils
@@ -13,7 +12,6 @@ import com.github.sceneren.base.ui.BaseBindingActivity
 import com.hjq.bar.TitleBar
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
-import com.therouter.TheRouter
 import com.therouter.router.Autowired
 import com.therouter.router.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +22,7 @@ import wiki.scene.hiltdemo.hilt.factory.MainAdapterFactory
 import wiki.scene.hiltdemo.requester.MainListRequester
 import javax.inject.Inject
 
-@Route(path = "/app/RecyclerViewActivity", params = ["id", "title"])
+@Route(path = "/app/RecyclerViewActivity")
 @AndroidEntryPoint
 class RecyclerViewActivity : BaseBindingActivity<ActivityRecyclerViewBinding>(), OnRefreshListener,
     OnLoadMoreListener {
@@ -47,11 +45,6 @@ class RecyclerViewActivity : BaseBindingActivity<ActivityRecyclerViewBinding>(),
         get() = binding.refreshLayout
 
     private var currentPage = 1
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        TheRouter.inject(this)
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onInitViewModel() {
         mRequester = getActivityScopeViewModel(MainListRequester::class.java)
@@ -78,7 +71,7 @@ class RecyclerViewActivity : BaseBindingActivity<ActivityRecyclerViewBinding>(),
 
     override fun onLeftClick(titleBar: TitleBar?) {
         super.onLeftClick(titleBar)
-        onBackPressed()
+        onBackPressedDispatcher.onBackPressed()
     }
 
 

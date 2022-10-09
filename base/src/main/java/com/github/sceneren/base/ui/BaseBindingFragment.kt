@@ -12,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
+import com.blankj.utilcode.util.KeyboardUtils
 import com.dylanc.loadingstateview.Decorative
 import com.dylanc.loadingstateview.LoadingState
 import com.dylanc.loadingstateview.LoadingStateDelegate
@@ -23,6 +24,7 @@ import com.gyf.immersionbar.ktx.immersionBar
 import com.hjq.bar.TitleBar
 import com.kongzue.dialogx.dialogs.WaitDialog
 import com.kunminx.architecture.ui.scope.ViewModelScope
+import com.therouter.TheRouter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -52,6 +54,11 @@ abstract class BaseBindingFragment<VB : ViewBinding> : Fragment(),
      */
     abstract fun lazyLoadData()
 
+    override val contentView: View?
+        get() = statusPageContentView()
+
+    abstract fun statusPageContentView(): View?
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mActivity = context as AppCompatActivity
@@ -59,6 +66,7 @@ abstract class BaseBindingFragment<VB : ViewBinding> : Fragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        TheRouter.inject(this)
         onInitViewModel()
     }
 
@@ -154,5 +162,10 @@ abstract class BaseBindingFragment<VB : ViewBinding> : Fragment(),
 
     protected fun hideLoadingDialog() {
         WaitDialog.dismiss()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        KeyboardUtils.clickBlankArea2HideSoftInput()
     }
 }

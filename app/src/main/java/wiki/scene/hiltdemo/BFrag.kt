@@ -1,6 +1,7 @@
 package wiki.scene.hiltdemo
 
 import android.os.Bundle
+import android.view.View
 import com.blankj.utilcode.util.ToastUtils
 import com.github.sceneren.base.ui.BaseBindingFragment
 import wiki.scene.hiltdemo.databinding.FragBBinding
@@ -49,5 +50,9 @@ class BFrag : BaseBindingFragment<FragBBinding>() {
     }
 
     override fun lazyLoadData() {
+    }
+
+    override fun statusPageContentView(): View {
+        return binding.root
     }
 }

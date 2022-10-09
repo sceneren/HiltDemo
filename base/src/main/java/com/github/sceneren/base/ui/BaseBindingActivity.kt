@@ -21,6 +21,7 @@ import com.hjq.bar.OnTitleBarListener
 import com.hjq.bar.TitleBar
 import com.kongzue.dialogx.dialogs.WaitDialog
 import com.kunminx.architecture.ui.scope.ViewModelScope
+import com.therouter.TheRouter
 
 abstract class BaseBindingActivity<VB : ViewBinding> : AppCompatActivity(),
     LoadingState by LoadingStateDelegate(), OnReloadListener, Decorative,
@@ -40,7 +41,7 @@ abstract class BaseBindingActivity<VB : ViewBinding> : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        TheRouter.inject(this)
         setContentViewWithBinding()
 
         binding.root.decorate(this, this)
